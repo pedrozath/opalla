@@ -84,6 +84,26 @@ On `.haml`
 
 ```
 
+PS: While we don't have the generators, please make sure you create these 2 files:
+
+On `app/assets/javascripts/controllers/application_controller.rb`:
+
+```ruby
+
+class ApplicationController < Opalla::Controller
+  # code shared between all controllers go here
+end
+
+```
+
+```ruby
+
+class ApplicationComponent < Opalla::Component
+  # code shared between all components go here
+end
+
+```
+
 ## Usage
 
 ### Router & Controllers
