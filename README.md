@@ -1,8 +1,10 @@
+![Opalla](opalla.gif)
+
 # Opalla
 
 Opalla brings Rails way to the front-end. It follows a Rails conventions mixed with a little of Backbone.
 
-It's build on top of `opal` and `opal-rails`.
+It's built on top of `opal` and `opal-rails`.
 
 The project is on beta phase. It's missing:
 
@@ -95,6 +97,8 @@ class ApplicationController < Opalla::Controller
 end
 
 ```
+
+On `app/assets/javascripts/controllers/application_component.rb`:
 
 ```ruby
 
