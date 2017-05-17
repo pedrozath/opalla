@@ -1,20 +1,9 @@
 ![Opalla](opalla.gif)
-
 # Opalla
 
 Opalla brings Rails way to the front-end. It follows a Rails conventions mixed with a little of Backbone.
 
 It's built on top of `opal` and `opal-rails`.
-
-The project is on beta phase. It's missing:
-
-* Specs
-* Tests
-* Generators
-* Rubocops
-* Initializer
-* Rake tasks for installation
-* ActiveRecord models support
 
 ## Installation
 
@@ -35,7 +24,15 @@ And then execute:
 
     $ bundle
 
-Opalla is a front-end MVC framework. So you want to have this folder structure:
+Then run:
+
+```ruby
+
+rails g opalla:install
+
+```
+
+Opalla is a front-end MVC framework. So you will to have this folder structure:
 
 ```
 your_app
@@ -47,25 +44,6 @@ your_app
         \_lib
         \_models
         \_views
-```
-
-On the javascript folder, you must rename your `application.js` to `application.rb`
-
-And place this code:
-
-```ruby
-require 'opalla'
-
-require_tree './lib'
-require_tree './models'
-require_tree './components'
-require_tree './controllers'
-require_tree './views'
-
-Document.ready? do
-  Opalla::Router.start
-end
-
 ```
 
 Lastly, in order to have your routes imported by Opalla, put this on your application layout:
@@ -83,28 +61,6 @@ On `.haml`
 ```haml
     :javascript
       window.routes = #{ Opalla::Util.routes.html_safe }
-
-```
-
-PS: While we don't have the generators, please make sure you create these 2 files:
-
-On `app/assets/javascripts/controllers/application_controller.rb`:
-
-```ruby
-
-class ApplicationController < Opalla::Controller
-  # code shared between all controllers go here
-end
-
-```
-
-On `app/assets/javascripts/controllers/application_component.rb`:
-
-```ruby
-
-class ApplicationComponent < Opalla::Component
-  # code shared between all components go here
-end
 
 ```
 
@@ -197,9 +153,9 @@ The following `haml` layout would work for both sides:
 
 ```haml
 
-  %main
-    The dude is called #{@dude}.
-    He works with #{something_awesome}
+%main
+  The dude is called #{@dude}.
+  He works with #{something_awesome}
 
 ```
 
@@ -211,10 +167,10 @@ They are instantiated/rendered from the controller layout, like this:
 
 ```haml
 
-  %main
-    The dude is called #{@dude}.
-    He works with #{something_awesome}
-    component(:contact_box)
+%main
+  The dude is called #{@dude}.
+  He works with #{something_awesome}
+  component(:contact_box)
 
 ```
 
@@ -257,10 +213,10 @@ In the controller template:
 
 ```haml
 
-  %main
-    The dude is called #{@dude}.
-    He works with #{something_awesome}
-    component(:contact_box)
+%main
+  The dude is called #{@dude}.
+  He works with #{something_awesome}
+  component(:contact_box)
 
 ```
 
@@ -275,7 +231,7 @@ In the component template:
 
 In the model (`app/assets/javascripts/models/contact_info.rb`):
 
-```
+```ruby
 class ContactInfo
   attr_accessor :email
 
@@ -356,8 +312,14 @@ end
 
 Please note that all events have their default behavior prevented by default.
 
-
 ## Development
+
+The project is on beta phase. It's missing:
+
+* Specs
+* Tests
+* Rubocops
+* ActiveRecord models support
 
 Fork and make a PR. Or talk to me at `pedro@pedromaciel.com`.
 

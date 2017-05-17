@@ -1,4 +1,5 @@
 require 'bundler'; Bundler.require
+require 'opal-browser'
 require 'active_support/dependencies'
 require 'opalla/version'
 require 'opalla/engine'
