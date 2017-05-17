@@ -1,8 +1,8 @@
 module Opalla
   class Component
-    attr_reader :template, :events, :model, :components, :id
+    attr_reader :template, :events, :model, :collection, :components, :id
 
-    def initialize(template: nil, model: nil, id: nil)
+    def initialize(template: nil, model: nil, collection: nil, id: nil)
       template ||= "components/_#{component_name}"
       @template = Template["views/#{template}"]
       @components = []
@@ -10,6 +10,10 @@ module Opalla
       unless model.nil?
         @model = model
         register_bindings
+      end
+      unless collection.nil?
+        @collection = collection
+        bind_collection
       end
     end
 
@@ -88,14 +92,19 @@ module Opalla
       @events = events_hash
     end
 
-    def self.bind(*attributes)
+    def self.bind(*attributes, callback)
+      callback ||= -> { render }
       @bindings = attributes
     end
 
     def bind_model(*attributes)
-      model.extend(Binding)
-      model.bind(self, *attributes)
+      model.extend(ModelBinding)
+      model.bind *attributes, -> { render }
     end
 
+    def bind_collection(*attributes)
+      collection.extend(CollectionBinding)
+      collection.bind *attributes, -> { render }
+    end
   end
 end

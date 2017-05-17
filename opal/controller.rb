@@ -2,9 +2,9 @@ module Opalla
   class Controller < Component
     attr_reader :el
 
-    def initialize(action=nil, params=nil, el: nil, template: nil)
+    def initialize(action=nil, params=nil, el: 'body', template: nil)
       super(template: "#{controller_name}/#{action}")
-      @el = Element[el_selector]
+      @el = Element[el_selector || el]
       self.send(action)
     end
 

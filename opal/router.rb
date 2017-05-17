@@ -33,7 +33,7 @@ module Opalla
       protected
 
       def routes
-        @routes ||= $$.routes
+        @routes ||= $$.opalla_data.routes
       end
     end
   end

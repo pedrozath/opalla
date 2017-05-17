@@ -22,6 +22,19 @@ module Opalla
       def header(routes); end
     end
 
+    def self.add_vars(var_assign)
+      @vars ||= {}
+      @vars.merge!(var_assign)
+    end
+
+    def self.vars
+      @vars || {}
+    end
+
+    def self.json_vars
+      @vars.to_json
+    end
+
     def self.routes
       all_routes = Rails.application.routes.routes
       inspector  = ActionDispatch::Routing::RoutesInspector.new(all_routes)

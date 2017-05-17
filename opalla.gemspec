@@ -37,6 +37,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'opal-jquery'
   spec.add_dependency 'opal-browser'
   spec.add_dependency 'opal-activesupport'
-  spec.add_dependency 'opal-rails', '~> 0.9'
+  spec.add_dependency 'opal-rails', '0.9.3'
 
 end
