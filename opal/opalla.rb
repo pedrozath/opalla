@@ -1,4 +1,5 @@
 require 'opal'
+require 'opal/full'
 require 'opal_ujs'
 require 'opal-jquery'
 require 'opal-haml'
@@ -14,6 +15,3 @@ require 'collection'
 require 'component'
 require 'controller'
 require 'router'
-
-require 'model_binding'
-require 'collection_binding'

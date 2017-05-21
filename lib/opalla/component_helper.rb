@@ -7,17 +7,12 @@ module Opalla
       output.html_safe
     end
 
-    def expose(variable_assignments)
-      Opalla::Util.add_vars(variable_assignments)
-    end
-
     protected
 
     def component_html(name, id: nil, model: nil, collection: nil)
       options = { partial: "components/#{name}", locals: {} }
       model.nil?      || options[:locals][:model]      = model
       collection.nil? || options[:locals][:collection] = collection
-      options[:locals].merge(Opalla::Util.vars)
       render(options)
     end
 

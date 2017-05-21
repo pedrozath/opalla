@@ -13,10 +13,7 @@ class OpallaMiddleware
   def js_routes
     <<~JS
       <script>
-        window.opalla_data = {
-          routes: #{ Opalla::Util.routes.html_safe },
-          vars:   #{ Opalla::Util.json_vars.html_safe }
-        }
+        window.opalla_data = #{ Opalla::Util.data_dump.to_json }
       </script>
     JS
   end

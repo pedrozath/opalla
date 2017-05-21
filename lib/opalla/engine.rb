@@ -16,6 +16,10 @@ module Opalla
       include Opalla::ComponentHelper
     end
 
+    ActiveSupport.on_load(:action_controller) do
+      include Opalla::ControllerAddOn
+    end
+
     config.after_initialize do |app|
       ActionController::Base.prepend_view_path "app/assets/javascripts/views/"
     end

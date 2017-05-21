@@ -16,29 +16,38 @@ module Opalla
             path: r[:path],
             reqs: r[:reqs]
           }
-        end.to_json
+        end
       end
 
       def header(routes); end
     end
 
-    def self.add_vars(var_assign)
-      @vars ||= {}
-      @vars.merge!(var_assign)
-    end
+    class << self
+      def add_vars(var_assign)
+        @vars ||= {}
+        @vars.merge!(var_assign)
+      end
 
-    def self.vars
-      @vars || {}
-    end
+      def vars
+        @vars || {}
+      end
 
-    def self.json_vars
-      @vars.to_json
-    end
+      def data_dump
+        Marshal.dump(data)
+      end
 
-    def self.routes
-      all_routes = Rails.application.routes.routes
-      inspector  = ActionDispatch::Routing::RoutesInspector.new(all_routes)
-      inspector.format(JsFormatter.new)
+      def data
+        {
+          routes: routes,
+          vars:   vars
+        }
+      end
+
+      def routes
+        all_routes = Rails.application.routes.routes
+        inspector  = ActionDispatch::Routing::RoutesInspector.new(all_routes)
+        inspector.format(JsFormatter.new)
+      end
     end
   end
 end

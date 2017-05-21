@@ -4,7 +4,7 @@ module Opalla
       def start
         current_path = $$.location.pathname
         routes.each do |name, r|
-          if r.JS[:path] == current_path
+          if r[:path] == current_path
             navigate_to name
             break
           end
@@ -13,9 +13,9 @@ module Opalla
 
       def navigate_to(route_key, *params)
         route = routes[route_key.to_s]
-        controller_name, action = route.reqs.split('#')
+        controller_name, action = route[:reqs].split('#')
         controller              = set_controller(controller_name)
-        url                     = set_url(route.path)
+        url                     = set_url(route[:path])
         history_push(url)
         controller.new action, params
       end
@@ -33,7 +33,7 @@ module Opalla
       protected
 
       def routes
-        @routes ||= $$.opalla_data.routes
+        Marshal.load($$.opalla_data)[:routes]
       end
     end
   end

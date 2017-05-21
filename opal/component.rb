@@ -7,14 +7,9 @@ module Opalla
       @template = Template["views/#{template}"]
       @components = []
       @id = id
-      unless model.nil?
-        @model = model
-        register_bindings
-      end
-      unless collection.nil?
-        @collection = collection
-        bind_collection
-      end
+      @resource = @model = model unless model.nil?
+      @resource = @collection = collection unless collection.nil?
+      register_bindings
     end
 
     def render
@@ -74,10 +69,25 @@ module Opalla
       self.class.instance_variable_get(:"@cidn") - 1
     end
 
+    def get_bindings
+      self.class.instance_variable_get :@bindings
+    end
+
     def register_bindings
-      bindings = self.class.instance_variable_get :@bindings
-      bindings.nil? && return
-      bind_model(*bindings)
+      get_bindings.nil? && return
+      if !@model.nil?
+        bind_model
+      elsif !@collection.nil?
+        bind_collection
+      end
+
+      events_hash.merge!({
+        'change [data-bind]' => -> target do
+          model = @resource.find(target)
+          attr  = target.data('bind')
+          model.public_send(:"#{attr}=", target.value)
+        end
+      })
     end
 
     def component_name
@@ -85,26 +95,25 @@ module Opalla
     end
 
     def events_hash
-      self.class.instance_variable_get :@events
+      self.class.instance_variable_get :@events || {}
     end
 
     def self.events(events_hash)
       @events = events_hash
     end
 
-    def self.bind(*attributes, callback)
-      callback ||= -> { render }
+    def self.bind(*attributes)
       @bindings = attributes
     end
 
-    def bind_model(*attributes)
-      model.extend(ModelBinding)
-      model.bind *attributes, -> { render }
+    def bind_model
+      model.nil? && return
+      model.bind(get_bindings, -> { render } )
     end
 
-    def bind_collection(*attributes)
-      collection.extend(CollectionBinding)
-      collection.bind *attributes, -> { render }
+    def bind_collection
+      (collection.nil? || get_bindings.nil?) && return
+      collection.bind(*get_bindings, -> { render })
     end
   end
 end
