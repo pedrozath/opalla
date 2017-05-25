@@ -6,9 +6,9 @@ module Opalla
       config.app_generators.javascript_engine :opalla
       app.middleware.use OpallaMiddleware
       js_folder = app.root.join(*%w[app assets javascripts]).to_s
-      app.config.autoload_paths += ["#{js_folder}/lib"]
-      app.config.autoload_paths += ["#{js_folder}/models"]
-      app.config.autoload_paths += ["#{js_folder}/collections"]
+      app.config.eager_load_paths += ["#{js_folder}/lib"]
+      app.config.eager_load_paths += ["#{js_folder}/models"]
+      app.config.eager_load_paths += ["#{js_folder}/collections"]
       Opal.append_path File.expand_path('../../../opal', __FILE__)
     end
 
