@@ -22,7 +22,8 @@ module Opalla
         html
       else
         target = Element[template.render(self)]
-        el.morph(target).attr(:id, id)
+        # el.morph(target).attr(:id, id)
+        el.html(target.html).attr(:id, id)
         bind_events
       end
     end

@@ -34,11 +34,10 @@ module Opalla
         end
       when Element
         sel = '[data-model-id]'
-        $console.log arg
         if arg.is(sel)
-          find(arg)
+          arg
         else
-          find(arg.closest(sel).first.data('model-id'))
+          find(arg.closest(sel).attr('data-model-id'))
         end
       end
     end
@@ -59,7 +58,7 @@ module Opalla
     end
 
     def callbacks
-      @bindings.map { |b| b[:callback] }
+      bindings.map { |b| b[:callback] }
     end
 
     protected
